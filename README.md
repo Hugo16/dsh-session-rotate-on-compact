@@ -1,39 +1,27 @@
-# dsh-session-rotate-on-compact
+# DSH Session Rotate on Compact
 
-A DSH plugin that rotates the outbound LLM session ID after each successful compaction, without creating a new DSH conversation.
+用于 DSH 的会话轮换插件。
 
-## What it does
+当 DSH 完成一次自动或手动 Compact 后，插件会生成新的 Session ID，让代理 API 将下一次请求识别为新会话，从而触发账号轮询。
 
-- Keeps the same DSH conversation/session.
-- Keeps the original outbound session ID during normal requests.
-- Keeps the original outbound session ID while the compaction request itself is running.
-- After a successful `compaction/end`, generates a new outbound session ID.
-- Uses that new outbound session ID on the next normal LLM request.
-- Does not modify `messages`, so the plugin does not re-inject compacted-away history.
-- Does not rotate on failed/aborted compactions.
+## 功能
 
-## How it works
+* DSH 会话保持不变
+* Compact 成功后切换 Session ID
+* 自动 Compact 和手动 Compact 都支持
+* Compact 失败时不切换
+* 不重新发送已经压缩掉的历史消息
 
-The plugin intercepts the final `llm/stream` call and replaces only `GenerateOptions.sessionId` for normal requests after a successful compaction. It does not rebuild or alter the message list.
+## 安装
 
-It listens for `compaction/end` and rotates only when the event has no error.
-
-## Install
-
-From the DSH project directory:
+在 DSH 项目目录执行：
 
 ```powershell
-pnpm dsh plugin --profile web add "C:\path\to\dsh-session-rotate-on-compact"
+pnpm dsh plugin --profile web add "插件目录路径"
 ```
 
-Then restart DSH.
+安装后重启 DSH。
 
-## Important
+## 版本
 
-This plugin changes the outbound LLM session ID used by DSH. Whether that causes a proxy to treat the request as a new conversation depends on how the selected DSH provider/adapter maps `GenerateOptions.sessionId` to the provider's request headers or fields.
-
-This plugin intentionally does not rewrite request messages. The next normal request therefore uses the message surface that DSH itself produces after compaction.
-
-## License
-
-MIT
+0.1.0
