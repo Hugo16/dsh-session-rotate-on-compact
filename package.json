@@ -1,0 +1,10 @@
+{
+  "name": "dsh-session-rotate-on-compact",
+  "version": "0.1.0",
+  "description": "Rotate only the outbound LLM session id after each successful DSH compaction without creating a new DSH session.",
+  "type": "module",
+  "main": "index.js",
+  "files": ["index.js", "cordis.patch.yml", "README.md"],
+  "engines": { "node": ">=20" },
+  "dsh": { "bundle": { "patch": "./cordis.patch.yml" } }
+}

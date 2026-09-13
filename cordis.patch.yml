@@ -1,0 +1,3 @@
+- insert:
+    - id: dsh-session-rotate-on-compact
+      name: dsh-session-rotate-on-compact
