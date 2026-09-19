@@ -14,10 +14,8 @@
 
 ## 安装
 
-在 DSH 项目目录执行：
-
 ```powershell
-pnpm dsh plugin --profile web add "插件目录路径"
+pnpm dsh plugin --profile web add "https://github.com/Hugo16/dsh-session-rotate-on-compact.git"
 ```
 
 安装后重启 DSH。
